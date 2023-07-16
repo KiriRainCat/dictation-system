@@ -34,7 +34,7 @@
           :key="item"
         >
           <li class="mb-2 text-justify">
-            <el-input v-model="inputs[index]" class="max-w-[240px]"></el-input>
+            <el-input v-model="inputs[index]" class="max-w-[470px]"></el-input>
           </li>
         </template>
         <el-link type="success" @click="handleContinue" class="mt-2">
