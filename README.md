@@ -1,16 +1,12 @@
-# 柒夜雨猫的 Vue3 项目模板（基于 TypeScript）
+# 柒夜雨猫的简易雅思写作信息默写系统 ~(｡≧3≦)ﾉ ⌒☆
 
-此模板包含了：
+此系统包含了：
 
-- Vite 4 + Vue 3 + TypeScript（也支持 TSX）
-- Vue Router 4
-- Pinia
-- Axios
-- Vue i18n
-- TailwindCSS
-- Element Plus
-- Cypress
-- | Vue，Router，Pinia，i18n 的 API | Vue 组件 | UI 框架组件 | → **均支持自动引入** ヾ(✿ ﾟ ▽ ﾟ)ノ
+- 默写列表预览
+- 可选择性的进行默写
+- 默写字数统计
+- 自动批改结果（根据文本相似度计算）
+- 待增加... 咕咕咕~
 
 ---
 
