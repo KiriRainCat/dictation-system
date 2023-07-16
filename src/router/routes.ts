@@ -31,4 +31,5 @@ export default [
     name: 'login',
     component: () => import('../views/AuthView.vue'),
   },
+  { path: '/:path(.*)*', name: '404', redirect: '/' },
 ]
