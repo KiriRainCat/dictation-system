@@ -1,0 +1,26 @@
+{
+  "list": {
+    "dictation-list-index": "默写表目录",
+    "last-edit": "上次被编辑",
+    "name": "名称"
+  },
+  "messages": {
+    "appName": "柒夜雨猫的简易默写系统",
+    "createBy": "制作者: 柒夜雨猫 (Sam Zhou)",
+    "loginSuccess": "登录成功",
+    "pleaseLogin": "请先进行登录~",
+    "unmatched": "账号或密码错误"
+  },
+  "result": {
+    "avgSimilarity": "机改综合匹配度(仅供参考)：",
+    "inputtedAns": "输入答案",
+    "result": "默写结果",
+    "similarity": "匹配度",
+    "standardAns": "标准答案"
+  },
+  "words": {
+    "login": "登录",
+    "password": "密码",
+    "username": "用户名"
+  }
+}
