@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const useStore = defineStore('store', () => {
-  const isLogin = ref(true)
+  const isLogin = ref(false)
   const dictationList = ref<Array<dictation>>([])
   const resultList = ref<Array<dictationResult>>([])
   return { isLogin, dictationList, resultList }

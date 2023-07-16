@@ -14,11 +14,20 @@
 </template>
 
 <script setup lang="ts">
+import Cookies from 'js-cookie'
+import { useStore } from './store/store'
+
 const { locale, t } = useI18n()
+
+const store = useStore()
 
 onBeforeMount(() => {
   locale.value = localStorage.getItem('LANG')!
   document.title = t('messages.appName')
+
+  if (Cookies.get('user') !== undefined) {
+    store.isLogin = true
+  }
 })
 </script>
 

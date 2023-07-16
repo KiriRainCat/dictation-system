@@ -29,6 +29,7 @@
 <script setup lang="ts">
 import router from '@/router'
 import { useStore } from '@/store/store'
+import Cookies from 'js-cookie'
 
 const { t } = useI18n()
 
@@ -45,6 +46,7 @@ const handleLogin = () => {
     store.isLogin = true
     router.push('/')
     ElMessage.success(t('messages.loginSuccess'))
+    Cookies.set('user', form.username)
     return
   }
   ElMessage.warning(t('messages.unmatched'))
