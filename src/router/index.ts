@@ -9,11 +9,6 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  const loading = ElLoading.service()
-  setTimeout(() => {
-    loading.close()
-  }, 500)
-
   const store = useStore()
   if (to.name !== 'login' && store.isLogin == false) {
     next('/login')

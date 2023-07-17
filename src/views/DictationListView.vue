@@ -16,6 +16,7 @@ const listName = router.currentRoute.value.params.listName
 const text = ref('')
 
 onMounted(() => {
+  const loading = ElLoading.service()
   axios
     .get(`/lists/${listName}.md`)
     .then((res) => {
@@ -25,6 +26,7 @@ onMounted(() => {
       text.value = '未找到文件：' + err
       ElMessage.error(err)
     })
+    .finally(() => loading.close())
 })
 </script>
 

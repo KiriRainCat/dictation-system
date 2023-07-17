@@ -46,6 +46,7 @@ const props = {
 const treeRef = ref<InstanceType<typeof ElTree>>()
 
 onMounted(() => {
+  const loading = ElLoading.service()
   axios
     .get(`/lists/${listName}.json`)
     .then((res) => {
@@ -55,6 +56,7 @@ onMounted(() => {
       data.value = '未找到文件：' + err
       ElMessage.error(err)
     })
+    .finally(() => loading.close())
 })
 
 /**
