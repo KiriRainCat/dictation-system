@@ -8,7 +8,11 @@
         <el-table-column :label="t('result.similarity')" prop="similarity"></el-table-column>
       </el-table>
       <div class="mt-4 font-bold">
-        {{ $t('result.avgSimilarity') + (similaritySum / resultList?.length!).toFixed(2) + '%' }}
+        {{
+          $t('result.avgSimilarity') +
+          ((similaritySum * 100) / resultList?.length!).toFixed(2) +
+          '%'
+        }}
       </div>
     </el-card>
   </div>
@@ -28,47 +32,72 @@ const { t } = useI18n()
 
 onMounted(() => {
   resultList.forEach((val) => {
-    val.similarity = calculateSimilarity(val.str1, val.str2)
+    val.similarity = calculateStringSimilarity(val.str1, val.str2)
   })
 
   console.log(resultList)
 })
 
-const calculateSimilarity = (str1: string, str2: string) => {
-  const len1 = str1.length
-  const len2 = str2.length
+function calculateStringSimilarity(str1: string, str2: string): string {
+  // 去除特殊字符
+  // eslint-disable-next-line no-useless-escape
+  const cleanStr1 = str1.replace(/[\/\|\[\]]/g, '').trim()
+  // eslint-disable-next-line no-useless-escape
+  const cleanStr2 = str2.replace(/[\/\|\[\]]/g, '').trim()
 
-  if (len1 === 0 && len2 === 0) {
-    return '100%' // 两个空字符串，相似度为 100%
-  }
+  // 分割为词语数组
+  const words1 = cleanStr1.split(' ')
+  const words2 = cleanStr2.split(' ')
 
-  const distance = Array(len1 + 1)
-    .fill(null)
-    .map(() => Array(len2 + 1).fill(null))
+  // 构建词语向量
+  const wordVector1 = createWordVector(words1)
+  const wordVector2 = createWordVector(words2)
 
-  for (let i = 0; i <= len1; i++) {
-    distance[i][0] = i
-  }
+  // 计算余弦相似度
+  const similarity = cosineSimilarity(wordVector1, wordVector2)
+  similaritySum.value += similarity
+  return (similarity * 100).toFixed(2) + '%'
+}
 
-  for (let j = 0; j <= len2; j++) {
-    distance[0][j] = j
-  }
+// 创建词语向量
+function createWordVector(words: string[]): Map<string, number> {
+  const wordVector = new Map<string, number>()
 
-  for (let i = 1; i <= len1; i++) {
-    for (let j = 1; j <= len2; j++) {
-      const cost = str1[i - 1] === str2[j - 1] ? 0 : 1
-      distance[i][j] = Math.min(
-        distance[i - 1][j] + 1, // 删除操作
-        distance[i][j - 1] + 1, // 插入操作
-        distance[i - 1][j - 1] + cost // 替换操作
-      )
+  for (const word of words) {
+    const cleanedWord = word.replace(/['’]/g, '') // 去除特殊符号
+    if (wordVector.has(cleanedWord)) {
+      wordVector.set(cleanedWord, wordVector.get(cleanedWord)! + 1)
+    } else {
+      wordVector.set(cleanedWord, 1)
     }
   }
 
-  const maxLen = Math.max(len1, len2)
-  const similarity = ((maxLen - distance[len1][len2]) / maxLen) * 100
-  similaritySum.value += similarity
-  return similarity.toFixed(2) + '%'
+  return wordVector
+}
+
+// 计算余弦相似度
+function cosineSimilarity(vector1: Map<string, number>, vector2: Map<string, number>): number {
+  let dotProduct = 0
+  let magnitude1 = 0
+  let magnitude2 = 0
+
+  for (const [word, count] of vector1) {
+    magnitude1 += count * count
+    if (vector2.has(word)) {
+      dotProduct += count * vector2.get(word)!
+    }
+  }
+
+  for (const count of vector2.values()) {
+    magnitude2 += count * count
+  }
+
+  if (magnitude1 === 0 || magnitude2 === 0) {
+    return 0 // 避免除以 0
+  }
+
+  const similarity = dotProduct / (Math.sqrt(magnitude1) * Math.sqrt(magnitude2))
+  return similarity
 }
 </script>
 
