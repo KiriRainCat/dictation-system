@@ -1,7 +1,7 @@
 <template>
   <nav>
     <CommonNav
-      class="fixed top-0 z-[1] w-[calc(100vw-60px)] h-10 mx-6 mt-1 bg-opacity-60 hover:bg-opacity-100 transition-all duration-300"
+      class="fixed top-0 z-50 w-[calc(100vw-60px)] h-10 mx-6 mt-1 bg-opacity-60 hover:bg-opacity-100 transition-all duration-300"
     />
   </nav>
   <main class="bg-gray-100">
