@@ -20,14 +20,28 @@
 
 <script setup lang="ts">
 import router from '@/router'
+import axios from 'axios'
 import type { dictationList } from 'env'
 
 const { t } = useI18n()
 
-const dictationLists: Array<dictationList> = [
-  { name: '雅思作文必备素材(上)', lastEdited: '2023/7/16 08:15' },
-  { name: '雅思作文必备素材(下)', lastEdited: '2023/7/16 08:15' },
-]
+let dictationLists = ref<Array<dictationList>>([])
+
+onMounted(() => {
+  const loading = ElLoading.service()
+  axios
+    .get('/lists/index.json')
+    .then((res) => {
+      dictationLists.value = res.data
+      console.log
+    })
+    .catch((err) => {
+      ElMessage.error(err)
+    })
+    .finally(() => {
+      loading.close()
+    })
+})
 
 const handleCellClick = (row: dictationList) => {
   router.push(`/list/${row.name}`)
