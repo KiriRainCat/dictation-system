@@ -12,12 +12,14 @@
             (topicList[currentTopicIndex].contents.length > 1 ? '(ex)' : '')
           }}：记忆
         </div>
-        <template
+
+        <li
           v-for="item in topicList[currentTopicIndex].contents[currentContentIndex].split(' / ')"
           :key="item"
+          class="mb-2 text-justify"
         >
-          <li class="mb-2 text-justify">{{ item }}</li>
-        </template>
+          {{ item }}
+        </li>
       </el-card>
 
       <el-card v-else class="min-w-[540px] max-w-[640px] rounded-lg shadow-lg my-20 select-none">
@@ -27,16 +29,20 @@
             (topicList[currentTopicIndex].contents.length > 1 ? '(ex)' : '')
           }}：默写
         </div>
-        <template
+        <li
           v-for="(item, index) in topicList[currentTopicIndex].contents[currentContentIndex].split(
             ' / '
           )"
           :key="item"
+          class="mb-2 text-justify"
         >
-          <li class="mb-2 text-justify">
-            <el-input v-model="inputs[index]" class="max-w-[470px]"></el-input>
-          </li>
-        </template>
+          <el-input
+            autosize
+            type="textarea"
+            v-model="inputs[index]"
+            class="max-w-[470px]"
+          ></el-input>
+        </li>
         <el-link type="success" @click="handleContinue" class="mt-2">
           <div class="text-lg font-bold">提交</div>
         </el-link>
